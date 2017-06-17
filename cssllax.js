@@ -100,8 +100,6 @@
 
       // Trigger the first run manually
       animate();
-
-      return { update }
     }
 
     // Set the scrollTop position (for detecting scroll updates)

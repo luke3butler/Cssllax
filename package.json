@@ -1,0 +1,8 @@
+{
+  "name": "cssllax",
+  "version": "1.0.0",
+  "description": "Parallax a CSS property",
+  "main": "cssllax.js",
+  "author": "Luke Butler",
+  "license": "MIT"
+}
