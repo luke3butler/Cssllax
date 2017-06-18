@@ -130,7 +130,7 @@
       if (csslaxxItems.length) {
         for (var i = 0; i < csslaxxItems.length; i++) {
           // Call the animate function on each item
-          if (csslaxxItems[i]) csslaxxItems[i].animate();
+          csslaxxItems[i].animate();
         }
       }
     }
