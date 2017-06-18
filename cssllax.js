@@ -54,6 +54,7 @@
     var add = function (selector, options) {
       // Set defaults
       var min = 0;
+      var mid = 50;
       var max = 100;
       var unit = '%';
 
@@ -67,6 +68,8 @@
         min = options.min === undefined ? min : options.min;
         max = options.max === undefined ? max : options.max;
         unit = options.unit === undefined ? unit : options.unit;
+        // Calculate middle if one is not provided
+        mid = options.mid === undefined ? ((max - min) / 2) + min : options.mid;
         // If property isn't set, leave the value undefined
         var property = options.property === undefined ? undefined : options.property;
       }
@@ -74,8 +77,18 @@
       // If no css property is set, there's nothing to do
       if (property === undefined) return false;
 
-      // define the range for the css property value
-      var range = max - min;
+      // Define ranges for the css property value (top and bottom half of page)
+      var range = [mid - min, max - mid];
+
+      var getTargetSize = function (position) {
+        if (position < 50) {
+          // Top half of page
+          return (range[0] * (position / 50)) + min;
+        } else {
+          // Bottom half of page
+          return (range[1] * ((position - 50) / 50)) + mid;
+        }
+      }
 
       // get all items that match the selector
       var elems = document.querySelectorAll(selector);
@@ -84,10 +97,8 @@
         var animate = function () {
           // Element position in viewport
           var position = percentageDownViewport(el);
-          // Get the target css numerical value
-          var targetPosition = (range * (position / 100)) + min;
           // Set the css property
-          el.style[property] = targetPosition + unit;
+          el.style[property] = getTargetSize(position) + unit;
         }
         // Return animate function
         return { animate: animate }
