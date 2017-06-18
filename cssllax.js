@@ -119,7 +119,7 @@
       if (csslaxxItems.length) {
         for (var i = 0; i < csslaxxItems.length; i++) {
           // Call the animate function on each item
-          csslaxxItems[i].animate();
+          if (csslaxxItems[i]) csslaxxItems[i].animate();
         }
       }
     }
