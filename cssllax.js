@@ -102,10 +102,12 @@
         var animate = function () {
           // Element position in viewport
           var position = percentageDownViewport(el);
+          // Get the target value
+          var targetValue = getTargetSize(position);
           // Set the css property
-          el.style[property] = getTargetSize(position) + unit;
+          el.style[property] = targetValue + unit;
           // Execute after hook if one was provided
-          if (afterHook !== false) afterHook(el, position);
+          if (afterHook !== false) afterHook(el, position, targetValue);
         }
         // Return animate function
         return { animate: animate }
