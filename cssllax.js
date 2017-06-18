@@ -57,6 +57,7 @@
       var mid = 50;
       var max = 100;
       var unit = '%';
+      var afterHook = false;
 
       options = options === undefined ? {} : options;
 
@@ -72,6 +73,10 @@
         mid = options.mid === undefined ? ((max - min) / 2) + min : options.mid;
         // If property isn't set, leave the value undefined
         var property = options.property === undefined ? undefined : options.property;
+        // Set the after hook if one was provided
+        if (options.after && typeof options.after === 'function') {
+          afterHook = options.after;
+        }
       }
 
       // If no css property is set, there's nothing to do
@@ -99,6 +104,8 @@
           var position = percentageDownViewport(el);
           // Set the css property
           el.style[property] = getTargetSize(position) + unit;
+          // Execute after hook if one was provided
+          if (afterHook !== false) afterHook(el, position);
         }
         // Return animate function
         return { animate: animate }
