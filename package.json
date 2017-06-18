@@ -4,5 +4,8 @@
   "description": "Parallax a CSS property",
   "main": "cssllax.js",
   "author": "Luke Butler",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "uglify-js": "^3.0.18"
+  }
 }
