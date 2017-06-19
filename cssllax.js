@@ -56,6 +56,7 @@
       var min = 0;
       var mid = 50;
       var max = 100;
+      var center = 50;
       var unit = '%';
       var afterHook = false;
 
@@ -71,6 +72,8 @@
         unit = options.unit === undefined ? unit : options.unit;
         // Calculate middle if one is not provided
         mid = options.mid === undefined ? ((max - min) / 2) + min : options.mid;
+        // Define what cssllax considers the center of the viewport
+        center = options.center === undefined ? center : options.center;
         // If property isn't set, leave the value undefined
         var property = options.property === undefined ? undefined : options.property;
         // Set the after hook if one was provided
@@ -88,12 +91,12 @@
       var range = [mid - min, max - mid];
 
       var getTargetSize = function (position) {
-        if (position < 50) {
+        if (position < center) {
           // Top half of page
-          return (range[0] * (position / 50)) + min;
+          return (range[0] * (position / center)) + min;
         } else {
           // Bottom half of page
-          return (range[1] * ((position - 50) / 50)) + mid;
+          return (range[1] * ((position - center) / (100 - center))) + mid;
         }
       }
 
