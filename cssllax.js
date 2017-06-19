@@ -77,10 +77,12 @@
         if (options.after && typeof options.after === 'function') {
           afterHook = options.after;
         }
+      } else if (typeof options === 'function') {
+        var customAction = options;
       }
 
-      // If no css property is set, there's nothing to do
-      if (property === undefined) return false;
+      // If no css property or custom action is set, there's nothing to do
+      if (property === undefined && !customAction) return false;
 
       // Define ranges for the css property value (top and bottom half of page)
       var range = [mid - min, max - mid];
@@ -99,6 +101,7 @@
       var elems = document.querySelectorAll(selector);
 
       var item = function (el) {
+        // Main animate
         var animate = function () {
           // Element position in viewport
           var position = percentageDownViewport(el);
@@ -109,8 +112,18 @@
           // Execute after hook if one was provided
           if (afterHook !== false) afterHook(el, position, targetValue);
         }
+
+        // Custom animate
+        var customAnimate = function () {
+          customAction(el, percentageDownViewport(el));
+        }
+
         // Return animate function
-        return { animate: animate }
+        return {
+          animate: (typeof customAction === 'function')
+            ? customAnimate // If customAction is set, it will run instead of animate
+            : animate
+          }
       }
 
       // Add each document item's update function to the array    
